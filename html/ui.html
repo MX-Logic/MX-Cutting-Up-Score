@@ -2,9 +2,20 @@
 <html>
 <head>
     <link rel="stylesheet" href="style.css">
+    <style>
+        #brand {
+            font-size: 10px;
+            color: rgba(0, 251, 255, 0.7);
+            letter-spacing: 4px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <div id="main-ui">
+        <div id="brand">MX PROJECT</div>
         <div id="timer">15:00</div>
         <div id="rank">ROOKIE</div>
         <div id="score">0000000</div>
@@ -14,7 +25,6 @@
             <div class="stat-box"><small>COMBO</small><span id="combo">x0</span></div>
         </div>
     </div>
-    <div id="alerts"><div id="near-miss">NEAR MISS</div></div>
 
     <script>
         const ui = document.getElementById('main-ui');
@@ -25,25 +35,9 @@
 
             if (data.action === "update") {
                 scoreElement.innerHTML = data.score.toString().padStart(7, '0');
-                if (data.multiplier) document.getElementById('multiplier').innerHTML = data.multiplier + "x";
-                if (data.speedMulti) document.getElementById('speed-multi').innerHTML = data.speedMulti;
-                if (data.combo !== undefined) document.getElementById('combo').innerHTML = "x" + data.combo;
-                
-                scoreElement.classList.remove('pulse');
-                void scoreElement.offsetWidth; 
-                scoreElement.classList.add('pulse');
-
-                if (data.nearMiss) {
-                    let nm = document.getElementById('near-miss'); 
-                    nm.classList.add('show');
-                    setTimeout(() => { nm.classList.remove('show'); }, 500);
-                }
-            }
-
-            if (data.action === "timer") {
-                let m = Math.floor(data.time / 60);
-                let s = data.time % 60;
-                document.getElementById('timer').innerHTML = m + ":" + (s < 10 ? "0" : "") + s;
+                document.getElementById('multiplier').innerHTML = data.multiplier + "x";
+                document.getElementById('speed-multi').innerHTML = data.speedMulti;
+                document.getElementById('combo').innerHTML = "x" + data.combo;
             }
 
             if (data.action === "score_wipe") {
@@ -54,13 +48,19 @@
                 document.getElementById('timer').innerHTML = "15:00";
             }
 
+            if (data.action === "timer") {
+                let m = Math.floor(data.time / 60);
+                let s = data.time % 60;
+                document.getElementById('timer').innerHTML = m + ":" + (s < 10 ? "0" : "") + s;
+            }
+
             if (data.action === "show") { 
                 ui.style.display = "block"; 
                 setTimeout(() => { ui.style.opacity = "1"; }, 10); 
             }
             if (data.action === "hide") { 
                 ui.style.opacity = "0"; 
-                setTimeout(() => { ui.style.display = "none"; }, 200); 
+                setTimeout(() => { ui.style.display = "none"; }, 300); 
             }
         });
     </script>
