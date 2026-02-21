@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+
+body { margin: 0; overflow: hidden; font-family: 'Orbitron', sans-serif; }
+
+#main-ui { 
+    position: absolute; top: 40px; left: 50%; transform: translateX(-50%); 
+    color: white; text-align: center; display: none; opacity: 0; width: 600px;
+    transition: opacity 0.2s ease-in-out;
+}
+
+#timer { font-size: 24px; color: #00fbff; margin-bottom: 5px; text-shadow: 0 0 10px #00fbff; }
+#rank { font-size: 14px; color: #00fbff; text-shadow: 0 0 10px #00fbff; margin-bottom: 2px; }
+
+/* Score is strictly White */
+#score { 
+    font-size: 60px; font-style: italic; margin: 5px 0; 
+    color: #ffffff !important; 
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+#combo-row { display: flex; justify-content: center; gap: 30px; margin-top: 15px; }
+.stat-box { display: flex; flex-direction: column; min-width: 100px; }
+.stat-box small { font-size: 10px; color: #666; letter-spacing: 1px; }
+
+/* Blue Accents */
+#multiplier { color: #00fbff; font-size: 26px; }
+#speed-multi { color: #00fbff; font-size: 18px; font-style: italic; opacity: 0.8; }
+#combo { color: #00fbff; font-size: 22px; text-shadow: 0 0 10px #00fbff; }
+
+.pulse { animation: scorePop 0.3s ease-out; }
+@keyframes scorePop {
+    0% { transform: scale(1.0); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1.0); }
+}
+
+#near-miss { 
+    position: absolute; top: 160px; left: 50%; transform: translateX(-50%);
+    color: #00fbff; font-size: 40px; opacity: 0; transition: 0.2s; font-weight: bold;
+}
+#near-miss.show { opacity: 1; transform: translateX(-50%) scale(1.3); }

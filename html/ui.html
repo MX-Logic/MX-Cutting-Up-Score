@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main-ui">
+        <div id="timer">15:00</div>
+        <div id="rank">ROOKIE</div>
+        <div id="score">0000000</div>
+        <div id="combo-row">
+            <div class="stat-box"><small>MULT</small><span id="multiplier">1.0x</span></div>
+            <div class="stat-box"><small>SPEED</small><span id="speed-multi">+0.00x</span></div>
+            <div class="stat-box"><small>COMBO</small><span id="combo">x0</span></div>
+        </div>
+    </div>
+    <div id="alerts"><div id="near-miss">NEAR MISS</div></div>
+
+    <script>
+        const ui = document.getElementById('main-ui');
+        const scoreElement = document.getElementById('score');
+
+        window.addEventListener('message', function(event) {
+            let data = event.data;
+
+            if (data.action === "update") {
+                scoreElement.innerHTML = data.score.toString().padStart(7, '0');
+                if (data.multiplier) document.getElementById('multiplier').innerHTML = data.multiplier + "x";
+                if (data.speedMulti) document.getElementById('speed-multi').innerHTML = data.speedMulti;
+                if (data.combo !== undefined) document.getElementById('combo').innerHTML = "x" + data.combo;
+                
+                scoreElement.classList.remove('pulse');
+                void scoreElement.offsetWidth; 
+                scoreElement.classList.add('pulse');
+
+                if (data.nearMiss) {
+                    let nm = document.getElementById('near-miss'); 
+                    nm.classList.add('show');
+                    setTimeout(() => { nm.classList.remove('show'); }, 500);
+                }
+            }
+
+            if (data.action === "timer") {
+                let m = Math.floor(data.time / 60);
+                let s = data.time % 60;
+                document.getElementById('timer').innerHTML = m + ":" + (s < 10 ? "0" : "") + s;
+            }
+
+            if (data.action === "score_wipe") {
+                scoreElement.innerHTML = "0000000";
+                document.getElementById('multiplier').innerHTML = "1.0x";
+                document.getElementById('speed-multi').innerHTML = "+0.00x";
+                document.getElementById('combo').innerHTML = "x0";
+                document.getElementById('timer').innerHTML = "15:00";
+            }
+
+            if (data.action === "show") { 
+                ui.style.display = "block"; 
+                setTimeout(() => { ui.style.opacity = "1"; }, 10); 
+            }
+            if (data.action === "hide") { 
+                ui.style.opacity = "0"; 
+                setTimeout(() => { ui.style.display = "none"; }, 200); 
+            }
+        });
+    </script>
+</body>
+</html>
