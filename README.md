@@ -1,5 +1,5 @@
 # MX-Cutting-Up-Score
-![MX Project Banner](https://ibb.co/JWjmgjJz)
+![MX Project Banner](https://cdn.discordapp.com/attachments/1474805838240809052/1474805850781515776/image.png?ex=699e7b3b&is=699d29bb&hm=98acf982ca7b2949e8b835762a39df659a92cf24611ae10ab5fa58a17c56639b&)
 
 A high-performance, standalone traffic-weaving script designed for high-speed "No Hesi" style gameplay.
 
